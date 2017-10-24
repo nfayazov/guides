@@ -82,6 +82,37 @@ Any RHS references inside `bar`'s local scope can be fullfilled by LHS reference
 
 **You can only traverse down a scope chain, not up.**
 
+There are other two important things you should know about scopes.
+
+1. Scopes are declared by functions, and not by blocks.
+2. Functions can be forward-referenced, variables can't.
+
+Observe: (each comment describes scope at the line on which it's written)
+
+```
+    // outer() is in scope because functions can be forward-referenced
+
+    function outer() {
+    
+    // only inner() is in scope here,
+    // because variable 'a' can't be forward-referenced
+    
+        var a = 1;       
+        function inner() {
+            var b = 2;
+            if (a == 1) {
+                var c = 3;
+            }
+            
+            // var c is still in scope, because JavaScript
+            // doesn't care about blocks, only functions
+        }
+        
+        // b and c are not in scope anymore, end of function
+        
+   }
+```
 # References
 
 1.  <a href='https://github.com/getify/You-Dont-Know-JS/tree/master/scope%20%26%20closures' target='_blank' rel='nofollow'>Scopes and Closures</a> by Kyle Simpson. It goes into more details of how the scope mechanism works, and also has a superficial description of how the JavaScript compiler works, so if you're interested in that, definitely give it a read! It's free on GitHub and can be bought from O'Reilly.
+2. Secrets of the JavaScript Ninja by John Resig and Bear Bibeault. A great guide for a more in-depth understanding of JavaScript. 
